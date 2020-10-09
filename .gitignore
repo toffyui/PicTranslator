@@ -2,10 +2,8 @@
 node_modules
 /dist
 
-
-# local env files
-.env.local
-.env.*.local
+translation-app-web-795a8f50d494.json
+.env.*
 
 # Log files
 npm-debug.log*
