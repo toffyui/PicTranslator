@@ -37,13 +37,24 @@
         >翻訳する</v-btn
       >
       <v-row justify="center" align="center">
-        <canvas width="500" height="500" ref="preview"></canvas>
+        <canvas width="windowWidth" ref="preview"></canvas>
       </v-row>
-      {{ this.results }}
-      {{ this.translateResult }}
+      <v-input type="text" v-model="textMessage" readonly
+        >{{ this.results
+        }}<v-btn type="button" @click="doCopyText">
+          コピーする
+        </v-btn></v-input
+      >
+      <v-input type="text" v-model="translateTextMessage" readonly
+        >{{ this.translateResult
+        }}<v-btn type="button" @click="doCopyTranslateText">
+          コピーする
+        </v-btn></v-input
+      >
     </v-container>
   </v-app>
 </template>
+<style></style>
 <script>
 import getCloudVisionResult from '../libs/visionApi';
 import getTranslate from '../libs/translateApi';
@@ -55,9 +66,21 @@ export default {
       translateResult: '',
       file: null,
       lang: 'ja',
+      windowWidth: window.parent.screen.width,
+      textMessage: '',
+      translateTextMessage: '',
     };
   },
   methods: {
+    doCopyText() {
+      this.textMessage = this.results;
+      this.$copyText(this.textMessage);
+    },
+    doCopyTranslateText() {
+      this.translateTextMessage = this.translateResult;
+      this.$copyText(this.translateTextMessage);
+    },
+
     addDropFile(e) {
       if (this.file) {
         this.clearCanvas();
@@ -69,7 +92,6 @@ export default {
       }
     },
     setImage() {
-      console.log();
       if (this.file && this.file.type.startsWith('image/')) {
         this.clearCanvas();
         const url = window.URL.createObjectURL(this.file);
@@ -103,7 +125,6 @@ export default {
     getCloudVisionResult: async function() {
       try {
         const data = await getCloudVisionResult(this.file);
-        //console.log(data.responses.fullTextAnnotation);
         if (data && data.responses) {
           const visionText = data.responses[0].fullTextAnnotation.text;
           this.results = visionText;
@@ -115,7 +136,6 @@ export default {
     getTranslateResult: async function() {
       try {
         const translateData = await getTranslate(this.results, this.lang);
-        //console.log(translateData.data.translations[0].translatedText);
         if (translateData && translateData.data) {
           this.translateResult =
             translateData.data.translations[0].translatedText;
