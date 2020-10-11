@@ -1,65 +1,93 @@
 <template>
   <v-app>
-    <v-container v-cloak @drop.prevent="addDropFile" @dragover.prevent>
-      <v-file-input
-        v-model="file"
-        @change="setImage"
-        @click:clear="clearData"
-        accept="image/*"
-        prepend-icon="mdi-camera"
-        placeholder="画像をドラッグ＆ドロップか選択してください。"
-      ></v-file-input>
+    <v-container>
+      <v-row @drop.prevent="addDropFile" @dragover.prevent>
+        <v-file-input
+          v-model="file"
+          @change="setImage"
+          @click:clear="clearData"
+          accept="image/*"
+          prepend-icon="mdi-camera"
+          placeholder="画像をドラッグ＆ドロップか選択してください。"
+        ></v-file-input>
+      </v-row>
       <v-row>
-        <v-col>
-          <img width="100%" v-if="uploadImageUrl" :src="uploadImageUrl" />
+        <v-col cols="12" sm="12" md="6">
+          <v-card @drop.prevent="addDropFile" @dragover.prevent>
+            <v-card-title class="title">
+              {{ this.message }}
+            </v-card-title>
+            <img width="100%" v-if="uploadImageUrl" :src="uploadImageUrl"/>
+            <img width="100%" v-if="!uploadImageUrl" src="../assets/mainPic.jpg"
+          /></v-card>
         </v-col>
-        <v-col>
-          <v-btn
-            block
-            color="primary"
-            :disabled="!file"
-            v-show="file && !results"
-            @click="getCloudVisionResult(file)"
-            >文字起こしする</v-btn
-          ><v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-icon v-on="on" @click="doCopyText" v-show="file && results">
-                mdi-checkbox-multiple-blank-outline
-              </v-icon>
-            </template>
-            コピーする
-          </v-tooltip>
-          <v-input type="text" v-show="file" v-model="textMessage" readonly>
-            {{ this.results }}</v-input
-          >
-          <v-btn
-            block
-            color="primary"
-            :disabled="!file"
-            v-show="file && !translateResult"
-            @click="getTranslateResult(results | file)"
-            >翻訳する</v-btn
-          >
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-icon
-                v-on="on"
-                @click="doCopyTranslateText"
-                v-show="file && translateResult"
+
+        <v-col cols="12" sm="12" md="6">
+          <v-sheet>
+            <v-card fluid>
+              <v-card-actions>
+                <v-btn
+                  class="white--text"
+                  block
+                  color="#17619F"
+                  :disabled="!file"
+                  v-show="!results"
+                  @click="getCloudVisionResult(file)"
+                  >文字起こしする</v-btn
+                >
+                <v-btn
+                  class="white--text"
+                  block
+                  color="#17619F"
+                  :disabled="!file"
+                  v-show="results"
+                  @click="doCopyText"
+                >
+                  コピーする
+                  <v-icon dark right>
+                    mdi-checkbox-multiple-blank-outline
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+
+              <v-card-text v-model="textMessage" v-show="file && results">
+                {{ this.results }}</v-card-text
               >
-                mdi-checkbox-multiple-blank-outline
-              </v-icon>
-            </template>
-            コピーする
-          </v-tooltip>
-          <v-input
-            v-show="file"
-            type="text"
-            v-model="translateTextMessage"
-            readonly
-          >
-            {{ this.translateResult }}</v-input
-          >
+            </v-card> </v-sheet
+          ><v-sheet class="pt-2">
+            <v-card>
+              <v-card-actions>
+                <v-btn
+                  class="white--text"
+                  block
+                  color="#17619F"
+                  :disabled="!file"
+                  v-show="!translateResult"
+                  @click="getTranslateResult(results | file)"
+                  >翻訳する</v-btn
+                >
+                <v-btn
+                  class="white--text"
+                  block
+                  color="#17619F"
+                  :disabled="!file"
+                  v-show="translateResult"
+                  @click="doCopyTranslateText"
+                >
+                  コピーする
+                  <v-icon dark right>
+                    mdi-checkbox-multiple-blank-outline
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-card-text
+                v-show="file && translateResult"
+                v-model="translateTextMessage"
+              >
+                {{ this.translateResult }}</v-card-text
+              >
+            </v-card>
+          </v-sheet>
         </v-col>
       </v-row>
     </v-container>
@@ -80,6 +108,7 @@ export default {
       textMessage: '',
       translateTextMessage: '',
       uploadImageUrl: '',
+      message: '画像をドラック＆ドロップ',
     };
   },
   methods: {
@@ -96,15 +125,18 @@ export default {
       if (this.file) {
         this.clearData();
         this.file = e.dataTransfer.files[0];
+        this.message = '画像プレビュー';
         this.setImage(this.file);
       } else {
         this.file = e.dataTransfer.files[0];
+        this.message = '画像プレビュー';
         this.setImage(this.file);
       }
     },
     setImage(file) {
       if (this.file && this.file.type.startsWith('image/')) {
         this.clearData();
+        this.message = '画像プレビュー';
         const fr = new FileReader();
         fr.readAsDataURL(file);
         fr.addEventListener('load', () => {
@@ -117,6 +149,7 @@ export default {
     clearData() {
       this.results = '';
       this.translateResult = '';
+      this.message = '画像をドラック＆ドロップ';
     },
     getCloudVisionResult: async function() {
       try {
