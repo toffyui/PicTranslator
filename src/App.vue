@@ -19,6 +19,9 @@
           src="../src/assets/title.png"
           width="230"
         />
+        <button color="black" @click="handleClick_changeLanguage('ja')">
+          クリック
+        </button>
       </div>
 
       <v-spacer></v-spacer>

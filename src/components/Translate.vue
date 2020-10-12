@@ -40,7 +40,19 @@
                   >{{ $t('button.transcription') }}</v-btn
                 >
               </v-card-actions>
-              <v-card-actions v-show="results">
+              <v-card-actions
+                v-show="openMessageA"
+                transition="slide-y-transition"
+              >
+                <v-btn block outlined color="#17619F"
+                  >{{ $t('button.copyDone') }}
+
+                  <v-icon light right>
+                    mdi-checkbox-marked-circle
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-card-actions v-show="results && !openMessageA">
                 <v-btn
                   class="white--text"
                   block
@@ -54,16 +66,7 @@
                   </v-icon>
                 </v-btn>
               </v-card-actions>
-              <v-alert
-                v-show="openMessageA"
-                class="mr-2 ml-2"
-                type="success"
-                dense
-                outlined
-                color="#17619F"
-              >
-                {{ $t('button.copyDone') }}
-              </v-alert>
+
               <v-card-text v-model="textMessage" v-show="file && results">
                 {{ this.results }}</v-card-text
               >
