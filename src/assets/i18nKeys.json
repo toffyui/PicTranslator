@@ -1,0 +1,20 @@
+{
+  "en": {
+    "message": {
+      "welcome": ""
+    }
+  },
+  "ja": {
+    "message": {
+      "welcome": "画像をドラッグ＆ドロップか選択してください。",
+      "pictureUpload": "画像をドラッグ＆ドロップ",
+      "pictureUploaded": "画像プレビュー"
+    },
+    "button": {
+      "transcription": "文字起こしする",
+      "copy": "コピーする",
+      "translation": "翻訳する",
+      "copyDone": "コピーしました"
+    }
+  }
+}

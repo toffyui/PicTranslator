@@ -2,20 +2,25 @@
   <v-app>
     <v-container>
       <v-row @drop.prevent="addDropFile" @dragover.prevent>
-        <v-file-input
-          v-model="file"
-          @change="setImage"
-          @click:clear="clearData"
-          accept="image/*"
-          prepend-icon="mdi-camera"
-          placeholder="画像をドラッグ＆ドロップか選択してください。"
-        ></v-file-input>
+        <v-col cols="12" sm="12">
+          <v-file-input
+            v-model="file"
+            @change="setImage"
+            @click:clear="clearData"
+            accept="image/*"
+            prepend-icon="mdi-camera"
+            :placeholder="$t('message.welcome')"
+          ></v-file-input>
+        </v-col>
       </v-row>
       <v-row>
         <v-col cols="12" sm="12" md="6">
           <v-card @drop.prevent="addDropFile" @dragover.prevent>
-            <v-card-title class="title">
-              {{ this.message }}
+            <v-card-title class="title" v-if="!uploadImageUrl">
+              {{ $t('message.pictureUpload') }}
+            </v-card-title>
+            <v-card-title class="title" v-if="uploadImageUrl">
+              {{ $t('message.pictureUploaded') }}
             </v-card-title>
             <img width="100%" v-if="uploadImageUrl" :src="uploadImageUrl"/>
             <img width="100%" v-if="!uploadImageUrl" src="../assets/mainPic.jpg"
@@ -25,61 +30,80 @@
         <v-col cols="12" sm="12" md="6">
           <v-sheet>
             <v-card fluid>
-              <v-card-actions>
+              <v-card-actions v-show="!results">
                 <v-btn
                   class="white--text"
                   block
                   color="#17619F"
                   :disabled="!file"
-                  v-show="!results"
                   @click="getCloudVisionResult(file)"
-                  >文字起こしする</v-btn
+                  >{{ $t('button.transcription') }}</v-btn
                 >
+              </v-card-actions>
+              <v-card-actions v-show="results">
                 <v-btn
                   class="white--text"
                   block
                   color="#17619F"
                   :disabled="!file"
-                  v-show="results"
                   @click="doCopyText"
                 >
-                  コピーする
+                  {{ $t('button.copy') }}
                   <v-icon dark right>
                     mdi-checkbox-multiple-blank-outline
                   </v-icon>
                 </v-btn>
               </v-card-actions>
-
+              <v-alert
+                v-show="openMessageA"
+                class="mr-2 ml-2"
+                type="success"
+                dense
+                outlined
+                color="#17619F"
+              >
+                {{ $t('button.copyDone') }}
+              </v-alert>
               <v-card-text v-model="textMessage" v-show="file && results">
                 {{ this.results }}</v-card-text
               >
             </v-card> </v-sheet
           ><v-sheet class="pt-2">
             <v-card>
-              <v-card-actions>
+              <v-card-actions v-show="!translateResult">
                 <v-btn
                   class="white--text"
                   block
                   color="#17619F"
                   :disabled="!file"
-                  v-show="!translateResult"
                   @click="getTranslateResult(results | file)"
-                  >翻訳する</v-btn
+                  >{{ $t('button.translation') }}</v-btn
                 >
+              </v-card-actions>
+              <v-card-actions v-show="translateResult">
                 <v-btn
                   class="white--text"
                   block
                   color="#17619F"
                   :disabled="!file"
-                  v-show="translateResult"
                   @click="doCopyTranslateText"
                 >
-                  コピーする
+                  {{ $t('button.copy') }}
                   <v-icon dark right>
                     mdi-checkbox-multiple-blank-outline
                   </v-icon>
                 </v-btn>
               </v-card-actions>
+              <v-alert
+                v-show="openMessageB"
+                class="mr-2 ml-2"
+                type="success"
+                dense
+                outlined
+                color="#17619F"
+              >
+                {{ $t('button.copyDone') }}
+              </v-alert>
               <v-card-text
                 v-show="file && translateResult"
                 v-model="translateTextMessage"
@@ -104,39 +128,45 @@ export default {
       results: '',
       translateResult: '',
       file: null,
-      lang: 'ja',
+      lang: this.$i18n.locale,
       textMessage: '',
       translateTextMessage: '',
       uploadImageUrl: '',
-      message: '画像をドラック＆ドロップ',
+      openMessageA: false,
+      openMessageB: false,
     };
   },
   methods: {
     doCopyText() {
       this.textMessage = this.results;
       this.$copyText(this.textMessage);
+      this.openMessageA = true;
+      window.setTimeout(() => {
+        this.openMessageA = false;
+      }, 1500);
     },
     doCopyTranslateText() {
       this.translateTextMessage = this.translateResult;
       this.$copyText(this.translateTextMessage);
+      this.openMessageB = true;
+      window.setTimeout(() => {
+        this.openMessageB = false;
+      }, 1500);
     },
 
     addDropFile(e) {
       if (this.file) {
         this.clearData();
         this.file = e.dataTransfer.files[0];
-        this.message = '画像プレビュー';
         this.setImage(this.file);
       } else {
         this.file = e.dataTransfer.files[0];
-        this.message = '画像プレビュー';
         this.setImage(this.file);
       }
     },
     setImage(file) {
       if (this.file && this.file.type.startsWith('image/')) {
         this.clearData();
-        this.message = '画像プレビュー';
         const fr = new FileReader();
         fr.readAsDataURL(file);
         fr.addEventListener('load', () => {
@@ -149,7 +179,6 @@ export default {
     clearData() {
       this.results = '';
       this.translateResult = '';
-      this.message = '画像をドラック＆ドロップ';
     },
     getCloudVisionResult: async function() {
       try {

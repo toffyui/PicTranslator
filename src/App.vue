@@ -4,20 +4,20 @@
       <div class="d-flex align-center">
         <v-img
           alt="Logo"
-          class="shrink mr-2"
+          class="shrink mr-4"
           contain
           src="../src/assets/newlogo.png"
           transition="scale-transition"
-          width="40"
+          width="50"
         />
 
         <v-img
           alt="Name"
-          class="shrink mt-1 hidden-sm-and-down"
+          class="shrink mt-1"
           contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
+          min-width="150"
+          src="../src/assets/title.png"
+          width="230"
         />
       </div>
 
@@ -41,7 +41,12 @@ export default {
   },
 
   data: () => ({
-    //
+    lang: 'ja',
   }),
+  methods: {
+    handleClick_changeLanguage(lang) {
+      this.$i18n.locale = lang;
+    },
+  },
 };
 </script>
