@@ -33,8 +33,8 @@ const browserLanguage = function() {
 };
 
 let defaultLang;
-if (browserLanguage() == 'ja') {
-  defaultLang = 'ja';
+if ((browserLanguage() == 'ja') | 'en' | 'fr' | 'de' | 'zh') {
+  defaultLang = browserLanguage();
 } else {
   defaultLang = 'en';
 }

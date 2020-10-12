@@ -83,7 +83,19 @@
                   >{{ $t('button.translation') }}</v-btn
                 >
               </v-card-actions>
-              <v-card-actions v-show="translateResult">
+              <v-card-actions
+                v-show="openMessageB"
+                transition="slide-y-transition"
+              >
+                <v-btn block outlined color="#17619F"
+                  >{{ $t('button.copyDone') }}
+
+                  <v-icon light right>
+                    mdi-checkbox-marked-circle
+                  </v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-card-actions v-show="translateResult && !openMessageB">
                 <v-btn
                   class="white--text"
                   block
@@ -97,16 +109,6 @@
                   </v-icon>
                 </v-btn>
               </v-card-actions>
-              <v-alert
-                v-show="openMessageB"
-                class="mr-2 ml-2"
-                type="success"
-                dense
-                outlined
-                color="#17619F"
-              >
-                {{ $t('button.copyDone') }}
-              </v-alert>
               <v-card-text
                 v-show="file && translateResult"
                 v-model="translateTextMessage"
@@ -131,7 +133,6 @@ export default {
       results: '',
       translateResult: '',
       file: null,
-      lang: this.$i18n.locale,
       textMessage: '',
       translateTextMessage: '',
       uploadImageUrl: '',
@@ -198,7 +199,10 @@ export default {
     getTranslateResult: async function() {
       if (this.results) {
         try {
-          const translateData = await getTranslate(this.results, this.lang);
+          const translateData = await getTranslate(
+            this.results,
+            this.$i18n.locale
+          );
           if (translateData && translateData.data) {
             this.translateResult =
               translateData.data.translations[0].translatedText;
@@ -211,7 +215,10 @@ export default {
           const data = await getCloudVisionResult(this.file);
           if (data && data.responses) {
             const visionText = data.responses[0].fullTextAnnotation.text;
-            const translateData = await getTranslate(visionText, this.lang);
+            const translateData = await getTranslate(
+              visionText,
+              this.$i18n.locale
+            );
             this.translateResult =
               translateData.data.translations[0].translatedText;
           }

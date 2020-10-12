@@ -1,7 +1,15 @@
 {
   "en": {
     "message": {
-      "welcome": ""
+      "welcome": "Please drag the picture or select one.",
+      "pictureUpload": "Drag the picture here.",
+      "pictureUploaded": "Image Preview"
+    },
+    "button": {
+      "transcription": "Transcribe",
+      "copy": "Copy",
+      "translation": "Translate",
+      "copyDone": "Copied"
     }
   },
   "ja": {
@@ -15,6 +23,45 @@
       "copy": "コピーする",
       "translation": "翻訳する",
       "copyDone": "コピーしました"
+    }
+  },
+  "de": {
+    "message": {
+      "welcome": "Bitte ziehen Sie das Bild oder wählen Sie eines aus.",
+      "pictureUpload": "Ziehen Sie das Bild hierher.",
+      "pictureUploaded": "Bildvorschau"
+    },
+    "button": {
+      "transcription": "Transkribieren",
+      "copy": "Kopie",
+      "translation": "Übersetzung",
+      "copyDone": "Kopiert"
+    }
+  },
+  "fr": {
+    "message": {
+      "welcome": "Veuillez faire glisser l'image ou en sélectionner une.",
+      "pictureUpload": "Faites glisser l'image ici.",
+      "pictureUploaded": "Aperçu de l'image"
+    },
+    "button": {
+      "transcription": "Transcrire",
+      "copy": "Copie",
+      "translation": "Traduire",
+      "copyDone": "Copié"
+    }
+  },
+  "zh": {
+    "message": {
+      "welcome": "請拖動圖片或選擇一張。",
+      "pictureUpload": "將圖片拖到此處。",
+      "pictureUploaded": "圖片預覽"
+    },
+    "button": {
+      "transcription": "錄製",
+      "copy": "複製",
+      "translation": "翻譯",
+      "copyDone": "複製的"
     }
   }
 }
