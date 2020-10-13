@@ -9,7 +9,9 @@
       "transcription": "Transcribe",
       "copy": "Copy",
       "translation": "Translate",
-      "copyDone": "Copied"
+      "copyDone": "Copied",
+      "language": "English",
+      "changeLang": "Change language"
     }
   },
   "ja": {
@@ -22,7 +24,9 @@
       "transcription": "文字起こしする",
       "copy": "コピーする",
       "translation": "翻訳する",
-      "copyDone": "コピーしました"
+      "copyDone": "コピーしました",
+      "language": "日本語",
+      "changeLang": "他の言語に変換"
     }
   },
   "de": {
@@ -35,7 +39,9 @@
       "transcription": "Transkribieren",
       "copy": "Kopie",
       "translation": "Übersetzung",
-      "copyDone": "Kopiert"
+      "copyDone": "Kopiert",
+      "language": "Deutsche",
+      "changeLang": "Sprache ändern"
     }
   },
   "fr": {
@@ -48,7 +54,9 @@
       "transcription": "Transcrire",
       "copy": "Copie",
       "translation": "Traduire",
-      "copyDone": "Copié"
+      "copyDone": "Copié",
+      "language": "Français",
+      "changeLang": "Changer de langue"
     }
   },
   "zh": {
@@ -61,7 +69,9 @@
       "transcription": "錄製",
       "copy": "複製",
       "translation": "翻譯",
-      "copyDone": "複製的"
+      "copyDone": "複製的",
+      "language": "中文",
+      "changeLang": "轉換成另一種語言"
     }
   }
 }

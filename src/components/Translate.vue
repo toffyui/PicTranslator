@@ -37,7 +37,8 @@
                   color="#17619F"
                   :disabled="!file"
                   @click="getCloudVisionResult(file)"
-                  >{{ $t('button.transcription') }}</v-btn
+                  >{{ $t('button.transcription') }}
+                  <v-icon light right>mdi-transcribe</v-icon></v-btn
                 >
               </v-card-actions>
               <v-card-actions
@@ -80,7 +81,8 @@
                   color="#17619F"
                   :disabled="!file"
                   @click="getTranslateResult(results | file)"
-                  >{{ $t('button.translation') }}</v-btn
+                  >{{ $t('button.translation')
+                  }}<v-icon light right>mdi-google-translate</v-icon></v-btn
                 >
               </v-card-actions>
               <v-card-actions
@@ -119,6 +121,9 @@
           </v-sheet>
         </v-col>
       </v-row>
+      <v-overlay :value="overlay">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-container>
   </v-app>
 </template>
@@ -138,6 +143,7 @@ export default {
       uploadImageUrl: '',
       openMessageA: false,
       openMessageB: false,
+      overlay: false,
     };
   },
   methods: {
@@ -185,11 +191,13 @@ export default {
       this.translateResult = '';
     },
     getCloudVisionResult: async function() {
+      this.overlay = true;
       try {
         const data = await getCloudVisionResult(this.file);
         if (data && data.responses) {
           const visionText = data.responses[0].fullTextAnnotation.text;
           this.results = visionText;
+          this.overlay = false;
         }
       } catch (error) {
         console.log(error);
@@ -197,6 +205,7 @@ export default {
     },
 
     getTranslateResult: async function() {
+      this.overlay = true;
       if (this.results) {
         try {
           const translateData = await getTranslate(
@@ -206,6 +215,7 @@ export default {
           if (translateData && translateData.data) {
             this.translateResult =
               translateData.data.translations[0].translatedText;
+            this.overlay = false;
           }
         } catch (error) {
           console.log(error);
@@ -221,6 +231,7 @@ export default {
             );
             this.translateResult =
               translateData.data.translations[0].translatedText;
+            this.overlay = false;
           }
         } catch (error) {
           console.log(error);
