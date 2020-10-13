@@ -71,6 +71,9 @@
               <v-card-text v-model="textMessage" v-show="file && results">
                 {{ this.results }}</v-card-text
               >
+              <v-card-text v-model="textMessage" v-if="notext">
+                {{ $t('message.notext') }}</v-card-text
+              >
             </v-card> </v-sheet
           ><v-sheet class="pt-2">
             <v-card>
@@ -117,6 +120,9 @@
               >
                 {{ this.translateResult }}</v-card-text
               >
+              <v-card-text v-model="textMessage" v-if="noTranslateText">
+                {{ $t('message.notext') }}</v-card-text
+              >
             </v-card>
           </v-sheet>
         </v-col>
@@ -144,6 +150,8 @@ export default {
       openMessageA: false,
       openMessageB: false,
       overlay: false,
+      notext: false,
+      noTranslateText: false,
     };
   },
   methods: {
@@ -189,6 +197,8 @@ export default {
     clearData() {
       this.results = '';
       this.translateResult = '';
+      this.notext = false;
+      this.noTranslateText = false;
     },
     getCloudVisionResult: async function() {
       this.overlay = true;
@@ -200,7 +210,8 @@ export default {
           this.overlay = false;
         }
       } catch (error) {
-        console.log(error);
+        this.notext = true;
+        this.overlay = false;
       }
     },
 
@@ -218,7 +229,8 @@ export default {
             this.overlay = false;
           }
         } catch (error) {
-          console.log(error);
+          this.noTranslateText = true;
+          this.overlay = false;
         }
       } else {
         try {
@@ -234,7 +246,8 @@ export default {
             this.overlay = false;
           }
         } catch (error) {
-          console.log(error);
+          this.noTranslateText = true;
+          this.overlay = false;
         }
       }
     },

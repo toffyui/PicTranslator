@@ -3,7 +3,8 @@
     "message": {
       "welcome": "Please drag the picture or select one.",
       "pictureUpload": "Drag the picture here.",
-      "pictureUploaded": "Image Preview"
+      "pictureUploaded": "Image Preview",
+      "notext": "Couldn't find any text in the image."
     },
     "button": {
       "transcription": "Transcribe",
@@ -18,7 +19,8 @@
     "message": {
       "welcome": "画像をドラッグ＆ドロップか選択してください。",
       "pictureUpload": "画像をドラッグ＆ドロップ",
-      "pictureUploaded": "画像プレビュー"
+      "pictureUploaded": "画像プレビュー",
+      "notext": "画像からテキストが検出できませんでした。"
     },
     "button": {
       "transcription": "文字起こしする",
@@ -33,7 +35,8 @@
     "message": {
       "welcome": "Bitte ziehen Sie das Bild oder wählen Sie eines aus.",
       "pictureUpload": "Ziehen Sie das Bild hierher.",
-      "pictureUploaded": "Bildvorschau"
+      "pictureUploaded": "Bildvorschau",
+      "notext": "Konnte auf dem Bild keinen Text finden."
     },
     "button": {
       "transcription": "Transkribieren",
@@ -48,7 +51,8 @@
     "message": {
       "welcome": "Veuillez faire glisser l'image ou en sélectionner une.",
       "pictureUpload": "Faites glisser l'image ici.",
-      "pictureUploaded": "Aperçu de l'image"
+      "pictureUploaded": "Aperçu de l'image",
+      "notext": "Je n'ai pas trouvé de texte dans l'image."
     },
     "button": {
       "transcription": "Transcrire",
@@ -63,7 +67,8 @@
     "message": {
       "welcome": "請拖動圖片或選擇一張。",
       "pictureUpload": "將圖片拖到此處。",
-      "pictureUploaded": "圖片預覽"
+      "pictureUploaded": "圖片預覽",
+      "notext": "我在图片中找不到任何文字。"
     },
     "button": {
       "transcription": "錄製",
