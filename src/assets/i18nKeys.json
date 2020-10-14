@@ -13,6 +13,11 @@
       "copyDone": "Copied",
       "language": "English",
       "changeLang": "Change language"
+    },
+    "footer": {
+      "contact": "Contact",
+      "termsOfService": "Terms Of Service",
+      "privacyPolicy": "Privacy Policy"
     }
   },
   "ja": {
@@ -29,6 +34,11 @@
       "copyDone": "コピーしました",
       "language": "日本語",
       "changeLang": "他の言語に変換"
+    },
+    "footer": {
+      "contact": "お問い合わせ",
+      "termsOfService": "ご利用規約",
+      "privacyPolicy": "プライバシーポリシー"
     }
   },
   "de": {
@@ -45,6 +55,11 @@
       "copyDone": "Kopiert",
       "language": "Deutsche",
       "changeLang": "Sprache ändern"
+    },
+    "footer": {
+      "contact": "Kontakt",
+      "termsOfService": "Nutzungsbedingungen",
+      "privacyPolicy": "Datenschutz-Bestimmungen"
     }
   },
   "fr": {
@@ -61,6 +76,11 @@
       "copyDone": "Copié",
       "language": "Français",
       "changeLang": "Changer de langue"
+    },
+    "footer": {
+      "contact": "Nous contacter",
+      "termsOfService": "Conditions d'utilisation",
+      "privacyPolicy": "Politique de confidentialité"
     }
   },
   "zh": {
@@ -77,6 +97,11 @@
       "copyDone": "複製的",
       "language": "中文",
       "changeLang": "轉換成另一種語言"
+    },
+    "footer": {
+      "contact": "聯繫我們",
+      "termsOfService": "服务条款",
+      "privacyPolicy": "隐私政策"
     }
   }
 }

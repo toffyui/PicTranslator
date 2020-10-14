@@ -1,27 +1,22 @@
 <template>
   <v-app>
-    <v-app-bar app color="white" dark class="pr-10 pl-10">
-      <div class="d-flex align-center">
+    <v-app-bar app color="white" dark class="header-class">
+      <div class="d-flex align-center" @click="returnTop">
         <v-img
           alt="Logo"
-          class="shrink mr-4"
+          class="shrink logo-class"
           contain
           src="../src/assets/newlogo.png"
           transition="scale-transition"
-          width="50"
         />
 
         <v-img
           alt="Name"
-          class="shrink mt-1"
+          class="shrink title-class"
           contain
           min-width="150"
           src="../src/assets/title.png"
-          width="230"
         />
-        <!-- <button color="black" @click="handleClick_changeLanguage('ja')">
-          クリック
-        </button> -->
       </div>
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -33,10 +28,12 @@
                 v-bind="attrs"
                 v-on="{ ...tooltip, ...menu }"
               >
-                {{ $t('button.language') }}
+                {{ $t("button.language") }}
               </v-btn>
             </template>
-            <span>{{ $t('button.changeLang') }}</span>
+            <span class="hidden-sm-and-down">{{
+              $t("button.changeLang")
+            }}</span>
           </v-tooltip>
         </template>
         <v-list>
@@ -75,28 +72,92 @@
     </v-app-bar>
 
     <v-main>
-      <Translate />
+      <router-view />
     </v-main>
+    <v-footer color="white" light>
+      <v-row justify="center" no-gutters>
+        <v-btn small text rounded @click="Contact">
+          {{ $t("footer.contact") }}
+        </v-btn>
+        <v-btn small text rounded @click="TermsOfService">
+          {{ $t("footer.termsOfService") }}
+        </v-btn>
+        <v-btn small text rounded @click="PrivacyPolicy">
+          {{ $t("footer.privacyPolicy") }}
+        </v-btn>
+        <v-col cols="12" class="text-center" small>
+          {{ new Date().getFullYear() }} — <strong>© Pic Translator</strong>
+        </v-col>
+      </v-row>
+    </v-footer>
   </v-app>
 </template>
+<style>
+@media screen and (min-width: 600px) {
+  .header-class {
+    padding: 0 10px;
+  }
+  .logo-class {
+    width: 50px;
+  }
+  .title-class {
+    width: 230px;
+    margin-left: 20px;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  .logo-class {
+    width: 30px;
+  }
+  .title-class {
+    width: 150px;
+    margin-left: 10px;
+  }
+}
+</style>
 
 <script>
-import Translate from './components/Translate';
-
 export default {
-  name: 'App',
-
-  components: {
-    Translate,
-  },
+  name: "App",
 
   data: () => ({
-    lang: 'ja',
+    lang: "ja",
   }),
   methods: {
     handleClick_changeLanguage(lang) {
       this.$i18n.locale = lang;
     },
+    Contact() {
+      if (this.$i18n.locale == "ja") {
+        window.open(
+          "https://docs.google.com/forms/d/e/1FAIpQLSfpyaiuRVfQTgOfEZvMN9mIkitSxld6nd1Y5Abr9-KDUhKPYQ/viewform?usp=sf_link",
+          "_blank"
+        );
+      } else {
+        window.open(
+          "https://docs.google.com/forms/d/e/1FAIpQLSer6Jeh0RQvAFlonjg3uOmkwDLRcIk0Lbcf1lTBZVzsytq6rA/viewform?usp=sf_link",
+          "_blank"
+        );
+      }
+    },
+    PrivacyPolicy() {
+      if (this.$i18n.locale == "ja") {
+        this.$router.push("/privacy-jp");
+      } else {
+        this.$router.push("/privacy");
+      }
+    },
+    TermsOfService() {
+      if (this.$i18n.locale == "ja") {
+        this.$router.push("/terms-jp");
+      } else {
+        this.$router.push("/terms");
+      }
+    },
+    returnTop() {
+      this.$router.push("/");
+    }
   },
 };
 </script>

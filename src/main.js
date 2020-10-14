@@ -3,6 +3,8 @@ import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import VueClipboard from 'vue-clipboard2';
 import VueI18n from 'vue-i18n';
+import router from './router'
+
 Vue.use(VueI18n);
 Vue.config.productionTip = false;
 Vue.use(VueClipboard);
@@ -44,7 +46,9 @@ const i18n = new VueI18n({
   messages: require('./assets/i18nKeys.json'),
 });
 
+
 new Vue({
+  router,
   vuetify,
   render: (h) => h(App),
   i18n,
