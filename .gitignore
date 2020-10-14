@@ -2,6 +2,7 @@
 node_modules
 yarn.lock
 translation-app-web-795a8f50d494.json
+.env.*
 
 # Log files
 npm-debug.log*
