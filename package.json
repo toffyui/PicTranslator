@@ -5,12 +5,15 @@
   "scripts": {
     "serve": "vue-cli-service serve --mode local",
     "build": "vue-cli-service build --mode development",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "postinstall": "yarn build",
+    "start": "node server.js"
   },
   "dependencies": {
     "@google-cloud/translate": "^6.0.3",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "express": "^4.17.1",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.1",
     "vue-i18n": "^8.22.0",
